@@ -16,17 +16,47 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 	const { updateMutation, deleteMutation } = useTaskOperations(boardId, task, onSuccess);
 
 	const onSubmit = handleSubmit((data) => {
-		if (data.name.trim().length === 0) {
+		setError(null);
+
+		// Normalize input by trimming and reducing multiple spaces to single spaces
+		const normalizedName = data.name.trim().replace(/\s+/g, " ");
+		const normalizedDescription = data.description?.trim().replace(/\s+/g, " ") || "";
+
+		if (task) {
+			const updatedData = {
+				name: normalizedName || task.name,
+				description: normalizedDescription || task.description,
+				icon: data.icon || task.icon,
+				status: data.status || task.status,
+			};
+			if (
+				updatedData.name === task.name &&
+				updatedData.description === task.description &&
+				updatedData.icon === task.icon &&
+				updatedData.status === task.status
+			) {
+				onSuccess?.();
+				return;
+			}
+		}
+
+		if (normalizedName.length === 0) {
 			setError("Task name is required");
 			return;
 		}
 
-		if (data.name.length > 50) {
+		if (normalizedName.length > 50) {
 			setError("Task name should not exceed 50 characters");
 			return;
 		}
+
 		try {
-			updateMutation.mutateAsync(data);
+			const normalizedData = {
+				...data,
+				name: normalizedName,
+				description: normalizedDescription,
+			};
+			updateMutation.mutateAsync(normalizedData);
 		} catch (error) {
 			if (error instanceof Error) setError(error.message);
 		}
@@ -40,6 +70,7 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 	};
 
 	useEffect(() => {
+		setError(null);
 		if (task) {
 			setValue("name", task.name);
 			setValue("description", task.description);
@@ -147,7 +178,7 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 
 				{/* Button */}
 				<div className={`flex items-center ${error ? "justify-between" : "justify-end "}`}>
-					{error && <p className="text-red-2 text-xs">{error}</p>}
+					{error && <p className="text-red-2 text-xs md:text-sm">{error}</p>}
 
 					<div className="flex gap-4 items-center">
 						{task && (

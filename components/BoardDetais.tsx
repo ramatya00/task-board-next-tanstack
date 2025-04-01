@@ -123,7 +123,7 @@ export default function BoardDetails({ board, setHidden }: BoardDetailsProps) {
 				</div>
 
 				<div className={`flex items-center ${error ? "justify-between" : "justify-end "}`}>
-					{error && <p className="text-red-2 text-xs">{error}</p>}
+					{error && <p className="text-red-2 text-xs md:text-sm">{error}</p>}
 
 					<div className="flex gap-4 items-center">
 						<Button
