@@ -1,13 +1,13 @@
 import { BoardDetailsProps } from "@/lib/types";
 import { formatDate } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./ui/Button";
 import Image from "next/image";
 import { useBoardOperations } from "@/hooks/useBoardOperations";
 import { useBoardForm } from "@/hooks/useBoardForm";
 import { useUrlHandling } from "@/hooks/useUrlHandling";
 
-export default function BoardDetails({ board, setHidden }: BoardDetailsProps) {
+export default function BoardDetails({ board, setHidden, onBoard }: BoardDetailsProps) {
 	const { tasks, updatedAt, id, name, description } = board;
 	const origin = typeof window !== "undefined" ? window.location.origin : "";
 	const boardUrl = `${origin}/board/${id}`;
@@ -20,9 +20,16 @@ export default function BoardDetails({ board, setHidden }: BoardDetailsProps) {
 	const { tooltip, handleCopyUrl } = useUrlHandling(boardUrl);
 
 	const onSubmit = handleSubmit((data) => {
+		setError(null);
+
+		if (data.name.length > 50) {
+			setError("Board name should not exceed 50 characters");
+			return;
+		}
+
 		const updatedData = {
-			name: data.name.trim() || name,
-			description: data.description.trim() || description,
+			name: data.name,
+			description: data.description,
 		};
 
 		if (updatedData.name === name && updatedData.description === description) {
@@ -39,6 +46,7 @@ export default function BoardDetails({ board, setHidden }: BoardDetailsProps) {
 	});
 
 	const handleDelete = () => {
+		setError(null);
 		if (!confirm("Are you sure you want to delete this board?")) return;
 		try {
 			deleteMutation.mutate();
@@ -46,6 +54,10 @@ export default function BoardDetails({ board, setHidden }: BoardDetailsProps) {
 			if (error instanceof Error) setError(error.message);
 		}
 	};
+
+	useEffect(() => {
+		if (onBoard) setError(null);
+	}, [onBoard]);
 
 	return (
 		<div className="h-full flex flex-col">

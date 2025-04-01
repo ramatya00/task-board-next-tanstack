@@ -23,3 +23,7 @@ export function getStatusPriority(status: string): number {
 
 	return priorities[status as keyof typeof priorities] || 999;
 }
+
+// Normalize input by trimming and reducing multiple spaces to single spaces
+export const normalizedName = (input: string) => input.trim().replace(/\s+/g, " ");
+export const normalizedDescription = (input: string) => input.trim().replace(/\s+/g, " ") || "";

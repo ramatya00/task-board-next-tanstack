@@ -4,7 +4,7 @@ import { TaskFormProps } from "@/lib/types";
 import { useTaskForm } from "@/hooks/useTaskForm";
 import { useTaskOperations } from "@/hooks/useTaskOperations";
 import { useEffect, useState } from "react";
-import { icons, status } from "@/lib/utils";
+import { icons, normalizedDescription, normalizedName, status } from "@/lib/utils";
 import Image from "next/image";
 import Button from "./ui/Button";
 
@@ -17,15 +17,12 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 
 	const onSubmit = handleSubmit((data) => {
 		setError(null);
-
-		// Normalize input by trimming and reducing multiple spaces to single spaces
-		const normalizedName = data.name.trim().replace(/\s+/g, " ");
-		const normalizedDescription = data.description?.trim().replace(/\s+/g, " ") || "";
+		const processedName = normalizedName(data.name);
 
 		if (task) {
 			const updatedData = {
-				name: normalizedName || task.name,
-				description: normalizedDescription || task.description,
+				name: processedName || task.name,
+				description: normalizedDescription(task.description ?? "") || task.description,
 				icon: data.icon || task.icon,
 				status: data.status || task.status,
 			};
@@ -40,12 +37,12 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 			}
 		}
 
-		if (normalizedName.length === 0) {
+		if (processedName.length === 0) {
 			setError("Task name is required");
 			return;
 		}
 
-		if (normalizedName.length > 50) {
+		if (processedName.length > 50) {
 			setError("Task name should not exceed 50 characters");
 			return;
 		}
@@ -53,8 +50,8 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 		try {
 			const normalizedData = {
 				...data,
-				name: normalizedName,
-				description: normalizedDescription,
+				name: normalizedName(data.name),
+				description: normalizedDescription(data.description ?? ""),
 			};
 			updateMutation.mutateAsync(normalizedData);
 		} catch (error) {

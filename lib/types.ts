@@ -7,6 +7,7 @@ export type TaskProps = Partial<Task>;
 export type BoardDetailsProps = {
 	board: BoardWithTasks;
 	setHidden: (value: boolean) => void;
+	onBoard: boolean;
 };
 
 export type TaskFormProps = {

@@ -91,7 +91,7 @@ export default function BoardPage() {
 
 			{/* Board */}
 			<Modal hidden={boardModalHidden} setHidden={setBoardModalHidden}>
-				<BoardDetails board={data} setHidden={setBoardModalHidden} />
+				<BoardDetails board={data} setHidden={setBoardModalHidden} onBoard={boardModalHidden} />
 			</Modal>
 			{/* Task */}
 			<Modal
