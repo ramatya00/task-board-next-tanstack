@@ -28,10 +28,7 @@ export default function BoardPage() {
 		queryKey: ["board", params.id],
 		queryFn: async () => {
 			const response = await getBoardById(params.id as string);
-			if (!response.success) {
-				if (response.status === 404) localStorage.removeItem("board");
-				throw new Error(response.message);
-			}
+			if (!response.success) throw new Error(response.message);
 
 			return response.board;
 		},
@@ -51,6 +48,10 @@ export default function BoardPage() {
 					<Button
 						name={error.message === "Could not retrieve board." ? "Try Again" : "Create new board"}
 						className="bg-black"
+						onClick={() => {
+							if (error.message === "Board has been Deleted / Incorrect Board ID")
+								localStorage.removeItem("board");
+						}}
 					/>
 				</Link>
 			</div>
