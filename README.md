@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TASK BOARD
 
-## Getting Started
+**Link:** https://task-board-tanstack.vercel.app
 
-First, run the development server:
+<img src="./public/TaskBoard.jpeg" alt="Home Page" width="768" height="auto">
+
+## Project Purpose
+
+A full-stack task management application demonstrating CRUD operations with modern web technologies. The project focuses on implementing core HTTP methods while providing a clean, intuitive interface for task management.
+
+## Tech Stack
+
+-  **Frontend**: Next.js, TypeScript, Tailwind CSS
+-  **State Management**: Tanstack Query
+-  **Forms**: React Hook Form
+-  **Backend**: Next.js Server Actions
+-  **Database**: Prisma ORM with Supabase PostgreSQL
+-  **Deployment**: Vercel
+
+## Key Features
+
+### Board Management
+
+-  Create new boards with unique URLs
+-  Edit board name and description
+-  Shareable board links
+-  View board statistics
+-  Delete board
+
+### Task Operations
+
+-  Add new tasks with default values
+-  Edit task name, description, icon and status
+-  Delete tasks
+-  Task sorting by status
+
+### Technical Features
+
+-  Real-time data synchronization
+-  Form validation and error handling
+-  Responsive design
+
+## Development Process
+
+1. **Initial Setup**
+
+   -  Next.js app scaffolding
+   -  Prisma ORM configuration with Supabase
+   -  Tailwind CSS configuration
+
+2. **Core Implementation**
+
+   -  Board and task data models
+   -  CRUD API endpoints via Server Actions
+   -  Form components with validation
+   -  State management with Tanstack Query
+
+3. **UI/UX Enhancements**
+
+   -  Responsive layout adjustments
+   -  Loading states and error handling
+   -  Clipboard copy functionality for board URLs
+
+4. **Testing & Deployment**
+   -  Manual testing of all CRUD operations
+   -  Vercel deployment configuration
+   -  Performance optimization
+
+## How to Run Locally
 
 ```bash
+git clone https://github.com/enggar77/task-board-next-tanstack.git
+cd task-board-next-tanstack
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

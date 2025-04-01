@@ -22,7 +22,7 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 		if (task) {
 			const updatedData = {
 				name: processedName || task.name,
-				description: normalizedDescription(task.description ?? "") || task.description,
+				description: normalizedDescription(data.description ?? "") || task.description,
 				icon: data.icon || task.icon,
 				status: data.status || task.status,
 			};
@@ -153,17 +153,32 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 								>
 									{status === "In Progress" && (
 										<div className="bg-orange-3 w-8 h-8 flex items-center justify-center rounded-xl">
-											<Image src="/Time_atack_duotone.svg" height={20} width={20} alt="in progress" />
+											<Image
+												src="/Time_atack_duotone.svg"
+												height={20}
+												width={20}
+												alt="in progress"
+											/>
 										</div>
 									)}
 									{status === "Completed" && (
 										<div className="bg-green-2 w-8 h-8 flex items-center justify-center rounded-xl">
-											<Image src="/Done_round_duotone.svg" height={20} width={20} alt="completed" />
+											<Image
+												src="/Done_round_duotone.svg"
+												height={20}
+												width={20}
+												alt="completed"
+											/>
 										</div>
 									)}
 									{status === "Won't Do" && (
 										<div className="bg-red-2 w-8 h-8 flex items-center justify-center rounded-xl">
-											<Image src="/close_ring_duotone.svg" height={20} width={20} alt="won't do" />
+											<Image
+												src="/close_ring_duotone.svg"
+												height={20}
+												width={20}
+												alt="won't do"
+											/>
 										</div>
 									)}
 									<span className="font-medium text-sm">{status}</span>
@@ -191,7 +206,15 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 						<Button
 							type="submit"
 							disable={updateMutation.isPending || deleteMutation.isPending}
-							name={updateMutation.isPending ? (task ? "Updating..." : "Saving...") : task ? "Update" : "Save"}
+							name={
+								updateMutation.isPending
+									? task
+										? "Updating..."
+										: "Saving..."
+									: task
+									? "Update"
+									: "Save"
+							}
 							className="bg-blue"
 							icon={<Image src="/Done_round.svg" alt="done" width={18} height={18} />}
 						/>

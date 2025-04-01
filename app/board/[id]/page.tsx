@@ -48,7 +48,10 @@ export default function BoardPage() {
 			<div className="absolute inset-0 flex flex-col gap-4 items-center justify-center">
 				<p>{error.message}</p>
 				<Link href="/">
-					<Button name="Create New Board" className="bg-black" />
+					<Button
+						name={error.message === "Could not retrieve board." ? "Try Again" : "Create new board"}
+						className="bg-black"
+					/>
 				</Link>
 			</div>
 		);

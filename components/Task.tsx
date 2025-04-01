@@ -19,7 +19,7 @@ export default function Task(task: TaskProps) {
 			<div className="w-full">
 				<div className="flex justify-between">
 					<div className="flex gap-6 items-center">
-						<div className="bg-white rounded-xl flex items-center justify-center w-12 h-12">
+						<div className="bg-white rounded-xl flex items-center justify-center w-12 h-12 shrink-0">
 							<p className="text-xl">{task.icon}</p>
 						</div>
 						<h2 className="text-xl font-semibold">{task.name}</h2>
@@ -33,7 +33,7 @@ export default function Task(task: TaskProps) {
 									? "bg-green-2"
 									: "bg-red-2"
 							}
-								w-12 h-12 flex items-center justify-center rounded-xl`}
+								w-12 h-12 flex items-center justify-center rounded-xl shrink-0`}
 						>
 							<Image
 								src={
