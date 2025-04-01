@@ -144,8 +144,8 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 						{task && (
 							<Button
 								type="button"
-								disable={updateMutation.isPending}
-								name={updateMutation.isPending ? "Deleting.." : "Delete"}
+								disable={updateMutation.isPending || deleteMutation.isPending}
+								name={deleteMutation.isPending ? "Deleting.." : "Delete"}
 								className="bg-gray-3"
 								icon={<Image src="/Trash.svg" alt="trash" width={18} height={18} />}
 								onClick={() => handleDelete(task.id)}
@@ -153,7 +153,7 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 						)}
 						<Button
 							type="submit"
-							disable={updateMutation.isPending}
+							disable={updateMutation.isPending || deleteMutation.isPending}
 							name={updateMutation.isPending ? (task ? "Updating..." : "Saving...") : task ? "Update" : "Save"}
 							className="bg-blue"
 							icon={<Image src="/Done_round.svg" alt="done" width={18} height={18} />}
