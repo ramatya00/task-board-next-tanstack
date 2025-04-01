@@ -12,7 +12,7 @@ export default function Modal({ children, setHidden, hidden }: ShowDetailsProps)
 			/>
 
 			<div
-				className={`fixed w-[calc(100%-32px)] max-w-[600px] h-[calc(100%-32px)] bg-white rounded-xl m-4 right-0 top-0 p-6 transition-all duration-300 ${
+				className={`fixed overflow-y-scroll w-[calc(100%-32px)] max-w-[600px] h-[calc(100%-32px)] bg-white rounded-xl m-4 right-0 top-0 p-6 transition-all duration-300 ${
 					hidden ? "translate-x-[150%]" : ""
 				}`}
 			>

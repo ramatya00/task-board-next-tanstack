@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 
 // Create a new board
 export async function createBoard() {
@@ -59,6 +58,44 @@ export async function getBoardById(boardId: string) {
 		return {
 			error: true,
 			message: "Could not retrieve board.",
+		};
+	}
+}
+
+// Update Board
+export async function updateBoard(boardId: string, { name, description }: { name: string; description: string }) {
+	try {
+		const board = await prisma.board.update({
+			where: { id: boardId },
+			data: {
+				name,
+				description,
+			},
+		});
+
+		return { success: true, board };
+	} catch (error) {
+		console.log("Board update error:", error);
+		return {
+			error: true,
+			message: "Could not update board.",
+		};
+	}
+}
+
+// Delete Board
+export async function deleteBoard(boardId: string) {
+	try {
+		await prisma.board.delete({
+			where: { id: boardId },
+		});
+
+		return { success: true };
+	} catch (error) {
+		console.log("Board deletion error:", error);
+		return {
+			error: true,
+			message: "Could not delete board.",
 		};
 	}
 }

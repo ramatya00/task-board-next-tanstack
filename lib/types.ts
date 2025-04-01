@@ -1,18 +1,18 @@
 import { Board, Task } from "@prisma/client";
 
-export type Icons = "⏰" | "🚀" | "❌" | "📚" | "💥" | "☕️";
-export type Status = "In Progress" | "Completed" | "Won't Do" | "To Do";
-
 export type BoardWithTasks = Board & { tasks: Task[] };
 
-export type TaskProps = Partial<Task> & {
-	handleShow: (taskId: string) => void;
-};
+export type TaskProps = Partial<Task>;
 
 export type BoardDetailsProps = {
 	board: BoardWithTasks;
 	setHidden: (value: boolean) => void;
-	updateBoard: (updatedBoard: BoardWithTasks) => void;
+};
+
+export type TaskFormProps = {
+	boardId: string;
+	task?: Task;
+	onSuccess?: () => void;
 };
 
 export type HeaderProps = {
