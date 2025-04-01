@@ -52,7 +52,7 @@ export default function Task(task: TaskProps) {
 						</div>
 					)}
 				</div>
-				<p className={`mt-2 ml-1 md:mx-[75px] font-light ${task.description && "mb-2"}`}>{task.description}</p>
+				{task.description && <p className="ml-1 md:mx-[75px] font-light my-2">{task.description}</p>}
 			</div>
 		</div>
 	);
