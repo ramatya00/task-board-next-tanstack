@@ -16,6 +16,15 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 	const { updateMutation, deleteMutation } = useTaskOperations(boardId, task, onSuccess);
 
 	const onSubmit = handleSubmit((data) => {
+		if (data.name.trim().length === 0) {
+			setError("Task name is required");
+			return;
+		}
+
+		if (data.name.length > 50) {
+			setError("Task name should not exceed 50 characters");
+			return;
+		}
 		try {
 			updateMutation.mutateAsync(data);
 		} catch (error) {
