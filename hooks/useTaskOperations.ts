@@ -7,15 +7,13 @@ export function useTaskOperations(boardId: string, task: Task | undefined, onSuc
 
 	const updateMutation = useMutation({
 		mutationFn: async (data: Task) => {
-			const response = task 
-				? await updateTask({ ...data, id: task.id }) 
-				: await addTask({ ...data, boardId });
-			
+			const response = task ? await updateTask({ ...data, id: task.id }) : await addTask({ ...data, boardId });
+
 			if (!response.success) throw new Error(response.message);
 			return response;
 		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["board", boardId] });
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: ["board", boardId] });
 			onSuccess?.();
 		},
 	});
@@ -26,8 +24,8 @@ export function useTaskOperations(boardId: string, task: Task | undefined, onSuc
 			if (!response.success) throw new Error(response.message);
 			return response;
 		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["board", boardId] });
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({ queryKey: ["board", boardId] });
 			onSuccess?.();
 		},
 	});

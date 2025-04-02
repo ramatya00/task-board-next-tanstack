@@ -19,7 +19,7 @@ export default function BoardDetails({ board, setHidden, onBoard }: BoardDetails
 	const { register, handleSubmit } = useBoardForm({ name, description });
 	const { tooltip, handleCopyUrl } = useUrlHandling(boardUrl);
 
-	const onSubmit = handleSubmit((data) => {
+	const onSubmit = handleSubmit(async (data) => {
 		setError(null);
 
 		if (data.name.length > 50) {
@@ -38,20 +38,23 @@ export default function BoardDetails({ board, setHidden, onBoard }: BoardDetails
 		}
 
 		try {
-			updateMutation.mutate(updatedData);
+			await updateMutation.mutateAsync(updatedData);
 			setHidden(true);
 		} catch (error) {
 			if (error instanceof Error) setError(error.message);
 		}
 	});
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
 		setError(null);
 		if (!confirm("Are you sure you want to delete this board?")) return;
+		document.body.classList.add("pointer-events-none");
 		try {
-			deleteMutation.mutate();
+			await deleteMutation.mutateAsync();
 		} catch (error) {
 			if (error instanceof Error) setError(error.message);
+		} finally {
+			document.body.classList.remove("pointer-events-none");
 		}
 	};
 

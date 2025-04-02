@@ -28,7 +28,7 @@ export default function Home() {
 		},
 	});
 
-	if (isLoading) return <Loading message="Creating your board" />;
+	if (isLoading) return <Loading message="Loading your board" />;
 
 	return (
 		<>
