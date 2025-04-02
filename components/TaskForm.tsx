@@ -8,7 +8,7 @@ import { icons, normalizedDescription, normalizedName, status } from "@/lib/util
 import Image from "next/image";
 import Button from "./ui/Button";
 
-export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
+export default function TaskForm({ boardId, task, onSuccess, onTask }: TaskFormProps) {
 	const [selectedIcon, setSelectedIcon] = useState(task?.icon);
 	const [selectedStatus, setSelectedStatus] = useState(task?.status || null);
 	const [error, setError] = useState<string | null>(null);
@@ -67,7 +67,12 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 	};
 
 	useEffect(() => {
-		setError(null);
+		if (onTask) {
+			setError(null);
+			reset();
+			setSelectedIcon(null);
+			setSelectedStatus(null);
+		}
 		if (task) {
 			setValue("name", task.name);
 			setValue("description", task.description);
@@ -75,12 +80,8 @@ export default function TaskForm({ boardId, task, onSuccess }: TaskFormProps) {
 			setSelectedStatus(task.status);
 			setValue("icon", task.icon);
 			setValue("status", task.status);
-		} else {
-			reset();
-			setSelectedIcon(null);
-			setSelectedStatus(null);
 		}
-	}, [task, reset, setValue]);
+	}, [onTask, task, reset, setValue]);
 
 	return (
 		<div className="h-full flex flex-col">

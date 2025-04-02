@@ -108,6 +108,7 @@ export default function BoardPage() {
 				<TaskForm
 					boardId={data.id}
 					task={selectedTask || undefined}
+					onTask={taskModalHidden}
 					onSuccess={() => {
 						setTaskModalHidden(true);
 						setSelectedTask(null);

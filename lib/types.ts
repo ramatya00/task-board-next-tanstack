@@ -13,6 +13,7 @@ export type BoardDetailsProps = {
 export type TaskFormProps = {
 	boardId: string;
 	task?: Task;
+	onTask: boolean;
 	onSuccess?: () => void;
 };
 

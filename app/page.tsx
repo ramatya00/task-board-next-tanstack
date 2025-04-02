@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const router = useRouter();
-	const { error, isLoading, refetch } = useQuery({
+	const { error, isPending, refetch } = useQuery({
 		queryKey: ["board"],
 		queryFn: async () => {
 			const savedBoardId = localStorage.getItem("board");
@@ -28,14 +28,21 @@ export default function Home() {
 		},
 	});
 
-	if (isLoading) return <Loading message="Loading your board" />;
+	if (isPending) return <Loading message="Loading your board" />;
 
 	return (
 		<>
 			{error && (
 				<div className="absolute inset-0 flex flex-col gap-4 items-center justify-center">
 					<p>{error.message}</p>
-					<Button name="Try Again" onClick={() => refetch()} className="bg-black" />
+					<Button
+						name="Try Again"
+						onClick={() => {
+							localStorage.removeItem("board");
+							refetch();
+						}}
+						className="bg-black"
+					/>
 				</div>
 			)}
 		</>
