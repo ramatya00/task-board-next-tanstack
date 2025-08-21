@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Board {
@@ -23,8 +22,8 @@ model Task {
   updatedAt   DateTime @updatedAt
   name        String
   description String?
-  icon        String?  
-  status      String 
+  icon        String?
+  status      String
   boardId     String
   board       Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
 
